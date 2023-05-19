@@ -3,14 +3,14 @@ import * as fs from 'fs';
 import { join } from 'path';
 import { DownloadedFileModel } from 'src/common/types/downloaded-file.model';
 
-const filepath = join('test', '34563.png');
+const filepath = join('test', 'testimg.jpg');
 export const mockImage = {
   fieldname: 'file',
   originalname: '34563.png',
   encoding: '7bit',
   mimetype: 'image/png',
-  buffer: fs.readFileSync(filepath),
-  size: 3638506,
+  buffer: Buffer.from(__dirname + '../../../test/testimg.jpg'),
+  size: 363,
 } as Express.Multer.File;
 
 const csvfilePath = join('test', 'mock.csv');
