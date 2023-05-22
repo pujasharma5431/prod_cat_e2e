@@ -31,9 +31,9 @@ it("should return data for pageNumber and pageSize", async()=>{
 })
 
     it("should get the product using id",async()=>{
-        const res=await request(app.getHttpServer())
+       return await request(app.getHttpServer())
         .get('/products/1')
-        console.log(res.body)
+        // console.log(res.body)
     })
 
     it('should get the product with id 1',async()=>{
@@ -59,16 +59,11 @@ it("should return data for pageNumber and pageSize", async()=>{
         expect(res.body).toStrictEqual(expected)
         expect(res.statusCode).toStrictEqual(200)
     })
-it('Should throw error for the id that doesnot exist',async()=>{
+it('Should throw empty array for the id that does not exist',async()=>{
     const res=  await request(app.getHttpServer())
     .get('/products/1000')
+    console.log(res.body)
         expect(res.body).toEqual( {})
 
 })
-it('  ')
-
-
-
-
-
 });
