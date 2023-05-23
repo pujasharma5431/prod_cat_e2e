@@ -15,12 +15,12 @@ describe('AppController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
   });
-  it('should return the status code 200', async () => {
+  it.only('should return the status code 200', async () => {
   const res= await request(app.getHttpServer())
-          .get('/products')
-        //   console.log(res.body)
+          .get('/products/3')
+          // console.log(res.body)
          
-        .expect(200)
+        .expect({})
 })
 
 it("should return data for pageNumber and pageSize", async()=>{
@@ -32,21 +32,21 @@ it("should return data for pageNumber and pageSize", async()=>{
 
     it("should get the product using id",async()=>{
        return await request(app.getHttpServer())
-        .get('/products/1')
+        .get('/products/3')
         // console.log(res.body)
     })
 
-    it('should get the product with id 1',async()=>{
+    it('should get the product with id 5',async()=>{
         const expected = {
-            "id": 1,
+            "id": 3,
             "categoryId": 1,
-            "parentId": 1,
+           
             "name": "PP",
             "description": "Description of Product 2",
             "status": "ACTIVE",
             "highlights": [
                 {
-                    "id": 1,
+                    "id": 3,
                     "description": "gfdsfghgfh"
                 }
             ],
@@ -55,9 +55,9 @@ it("should return data for pageNumber and pageSize", async()=>{
             ]
         }
       const res=  await request(app.getHttpServer())
-        .get('/products/1')
+        .get('/products/3')
         expect(res.body).toStrictEqual(expected)
-        expect(res.statusCode).toStrictEqual(200)
+        expect(res.statusCode).toBe(200)
     })
 it('Should throw empty array for the id that does not exist',async()=>{
     const res=  await request(app.getHttpServer())

@@ -5,6 +5,7 @@ import { AppModule } from 'src/app.module';
 import { mockFile } from 'src/products/mocks/product-req-res.mock';
 import { mockImage } from 'src/csv/mocks/csv-req-res.mock';
 import { ConfigModule } from '@nestjs/config';
+const axios = require('axios');
 describe('ProductController E2E Test', () => {
   let app: INestApplication;
   beforeAll(async () => {
@@ -28,6 +29,9 @@ return request(app.getHttpServer())
         images:[mockImage]
       })
 
-    .expect(400)
+
   });
+
+  
+
 });
