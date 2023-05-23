@@ -17,7 +17,7 @@ describe('AppController (e2e)', () => {
   });
   it('should return the status code 200', async () => {
   const res= await request(app.getHttpServer())
-          .delete('/products/7')
+          .delete('/products/9')
         //   console.log(res.body)
          
         .expect(200)

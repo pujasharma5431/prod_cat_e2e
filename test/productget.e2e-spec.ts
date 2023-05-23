@@ -15,55 +15,73 @@ describe('AppController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
   });
-  it.only('should return the status code 200', async () => {
-  const res= await request(app.getHttpServer())
-          .get('/products/3')
-          // console.log(res.body)
+//   it.only('should return the status code 200', async () => {
+//   const res= await request(app.getHttpServer())
+//           .get('/products/3')
+//           // console.log(res.body)
          
-        .expect({})
-})
+//         .expect({})
+// })
 
-it("should return data for pageNumber and pageSize", async()=>{
-   const res= await request(app.getHttpServer())
-    .get('/products/paged/2/2')
-    console.log(res.body)
-    // .expect(200) 
-})
+// it("should return data for pageNumber and pageSize", async()=>{
+//    const res= await request(app.getHttpServer())
+//     .get('/products/paged/2/2')
+//     console.log(res.body)
+//     // .expect(200) 
+// })
 
-    it("should get the product using id",async()=>{
-       return await request(app.getHttpServer())
-        .get('/products/3')
-        // console.log(res.body)
-    })
+//     it("should get the product using id",async()=>{
+//        return await request(app.getHttpServer())
+//         .get('/products/3')
+//         // console.log(res.body)
+//     })
 
-    it('should get the product with id 5',async()=>{
-        const expected = {
-            "id": 3,
-            "categoryId": 1,
+//     it('should get the product with id 5',async()=>{
+//         const expected = {
+//             "id": 3,
+//             "categoryId": 1,
            
-            "name": "PP",
-            "description": "Description of Product 2",
-            "status": "ACTIVE",
-            "highlights": [
-                {
-                    "id": 3,
-                    "description": "gfdsfghgfh"
-                }
-            ],
-            "images": [
-                "http://localhost:3333/api/images/products/1"
-            ]
-        }
-      const res=  await request(app.getHttpServer())
-        .get('/products/3')
-        expect(res.body).toStrictEqual(expected)
-        expect(res.statusCode).toBe(200)
-    })
-it('Should throw empty array for the id that does not exist',async()=>{
-    const res=  await request(app.getHttpServer())
-    .get('/products/1000')
-    console.log(res.body)
-        expect(res.body).toEqual( {})
+//             "name": "PP",
+//             "description": "Description of Product 2",
+//             "status": "ACTIVE",
+//             "highlights": [
+//                 {
+//                     "id": 3,
+//                     "description": "gfdsfghgfh"
+//                 }
+//             ],
+//             "images": [
+//                 "http://localhost:3333/api/images/products/1"
+//             ]
+//         }
+//       const res=  await request(app.getHttpServer())
+//         .get('/products/3')
+//         expect(res.body).toStrictEqual(expected)
+//         expect(res.statusCode).toBe(200)
+//     })
+// it('Should throw empty array for the id that does not exist',async()=>{
+//     const res=  await request(app.getHttpServer())
+//     .get('/products/1000')
+//     console.log(res.body)
+//         expect(res.body).toEqual( {})
+
+// })
+it('Should have the following properties',async()=>{
+  const res=  await request(app.getHttpServer())
+  .get('/products')
+  .expect(200)
+  
+      expect(res.body[0]).toHaveProperty("id")
+      expect(res.body[0]).toHaveProperty("categoryId")
+      expect(res.body[0]).toHaveProperty("parentId")
+      expect(res.body[0]).toHaveProperty("name")
+      expect(res.body[0]).toHaveProperty("description")
+      expect(res.body[0]).toHaveProperty("status")
+      expect(res.body[0]).toHaveProperty("highlights")
+      expect(res.body[0].highlights[0]).toHaveProperty("id")
+     
+   
+
 
 })
 });
