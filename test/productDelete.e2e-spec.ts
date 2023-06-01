@@ -20,6 +20,15 @@ describe('AppController (e2e)', () => {
           .delete('/products/9')
         //   console.log(res.body)
          
-        .expect(200)
+        .expect(404)
+})
+
+it("should return the status code of 400 for invalid id",async()=>{
+  const id=[1999,494994];
+  const res= await request(app.getHttpServer())
+
+
+  .delete(`/products/${id}`)
+  .expect(400)
 })
 });

@@ -31,7 +31,7 @@ describe('AppController (e2e)', () => {
           .field('highlight', 'Updated Highlight')
           .field('status', 'ACTIVE')
           .field('categoryId', '2') // Updated category ID
-        console.log(res.body)
+        // console.log(res.body)
       });
     });
   });

@@ -1,9 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
-import { error } from 'console';
-
+import { AppModule } from '../src/app.module';
+import { ConfigModule } from '@nestjs/config';
+import { join } from 'path';
+import * as fs from 'fs';
+import { filepath } from 'src/products/mocks/product-req-res.mock';
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 
@@ -15,62 +17,12 @@ describe('AppController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
   });
-//   it.only('should return the status code 200', async () => {
-//   const res= await request(app.getHttpServer())
-//           .get('/products/3')
-//           // console.log(res.body)
-         
-//         .expect({})
-// })
-
-// it("should return data for pageNumber and pageSize", async()=>{
-//    const res= await request(app.getHttpServer())
-//     .get('/products/paged/2/2')
-//     console.log(res.body)
-//     // .expect(200) 
-// })
-
-//     it("should get the product using id",async()=>{
-//        return await request(app.getHttpServer())
-//         .get('/products/3')
-//         // console.log(res.body)
-//     })
-
-//     it('should get the product with id 5',async()=>{
-//         const expected = {
-//             "id": 3,
-//             "categoryId": 1,
-           
-//             "name": "PP",
-//             "description": "Description of Product 2",
-//             "status": "ACTIVE",
-//             "highlights": [
-//                 {
-//                     "id": 3,
-//                     "description": "gfdsfghgfh"
-//                 }
-//             ],
-//             "images": [
-//                 "http://localhost:3333/api/images/products/1"
-//             ]
-//         }
-//       const res=  await request(app.getHttpServer())
-//         .get('/products/3')
-//         expect(res.body).toStrictEqual(expected)
-//         expect(res.statusCode).toBe(200)
-//     })
-// it('Should throw empty array for the id that does not exist',async()=>{
-//     const res=  await request(app.getHttpServer())
-//     .get('/products/1000')
-//     console.log(res.body)
-//         expect(res.body).toEqual( {})
-
-// })
+// Response of 200
 it('Should have the following properties',async()=>{
   const res=  await request(app.getHttpServer())
   .get('/products')
   .expect(200)
-  
+  // Response that get the property
       expect(res.body[0]).toHaveProperty("id")
       expect(res.body[0]).toHaveProperty("categoryId")
       expect(res.body[0]).toHaveProperty("parentId")
@@ -79,9 +31,47 @@ it('Should have the following properties',async()=>{
       expect(res.body[0]).toHaveProperty("status")
       expect(res.body[0]).toHaveProperty("highlights")
       expect(res.body[0].highlights[0]).toHaveProperty("id")
-     
+})
+
+
+// Response according to pageNumber and pageSize
+it("should respond with the product using specific pageNumber and pageSize", async () => {
+
+  const pageNumber = 1;
+  const pageSize = 2;
+
+  const res = await request(app.getHttpServer())
+    .get(`/products/paged/${pageNumber}/${pageSize}`)
+    .expect(200);
+  expect(res.body).toHaveLength(pageSize);
+ 
+
+})
+it("should respond the invalid mesage when you send the string instead of number",async()=>{
+  const pageNumber = "dd";
+  const pageSize = 2;
+
+  const res = await request(app.getHttpServer())
+    .get(`/products/paged/${pageNumber}/${pageSize}`)
+    .expect(400);
+  // expect(res.body).toHaveLength(pageSize);
+
+})
+// GET response using id
+it("should respond using id",  () => {
+
+  
+  const id =5;
+
+
+return request(app.getHttpServer())
+    .get(`/products/${id}`)
+    .expect(200);
+
+ 
+      
    
+})
 
 
 })
-});
